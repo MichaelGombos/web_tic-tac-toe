@@ -1,7 +1,59 @@
+#start{
+    max-height: 300px;
+    max-width:400px;
+    height: 310px;
+    width:400px;
+    border: 5px solid black;
+    margin-left:50%;
+    transform: translate(-50%);
+}
+
+#start p{
+    width:270px;
+    margin-left:50%;
+    transform: translate(-50%);
+}
+#start button{
+    width:270px;
+    height: 90px;
+    font-size:30px;
+    margin-left:50%;
+    transform: translate(-50%);
+}
+
+#playerNames label{
+    display: block;
+    text-align:center;
+
+}
+#playerNames input{
+    width: 250px;
+    height: 20px;
+    border: 5px solid black;
+    margin-left:50%;
+    transform: translate(-50%);
+}
 
 
+main{
 
-
+}
+#scoreBoard{
+    display:flex;
+    flex-direction:row;
+    justify-content: center;
+    align-items: center;
+    font-size:20px;
+}
+#scoreBoard #score{
+    margin-left: 20px;
+    margin-right: 20px;
+    font-size:50px;
+}
+#winnerText{
+    display:flex;
+    justify-content: center;
+}
 #board{
     margin-left:50%;
     transform: translate(-50%);

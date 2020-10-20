@@ -7,18 +7,32 @@
     <body>
         <header>
             <div id="start">
-                <p>Enter a name for player1 and player2, or you like,
-                    you can play against a computer. When you are ready to 
-                    begin, press start.
+                <p>Enter a name for player1 and player2.<br>When you are ready to 
+                    begin, press play.
                 </p>
+
+                <div id="playerNames">
+                    <form>
+                        <label for='p1Name'>Player One name</label>
+                        <input type="text" id="p1Name" name="p1Name"><br>
+                        <label for='p2Name'>Player Two name</label>
+                        <input type="text" id="p2Name" name="p2Name"><br>
+                    </form>
+                </div>
+
                 <button>
-                    start
+                    PLAY
                 </button>
             </div>
         </header>
         <main>
-            <div id="play1">
-
+            <div id="scoreBoard">
+                <p id="p1Name">Player1</p>
+                <p id="score">0-0</p>
+                <p id="p2Name">Player2</p>
+            </div>
+            <div id="winnerText">
+                <p>winner is printed here</p>
             </div>
             <div id="board">
                 <div class = "ticBox" data-index = "0 0"> X </div>
@@ -32,9 +46,6 @@
                 <div class = "ticBox" data-index = "2 2"> _ </div>
             </div>
 
-            <div id="play2">
-
-            </div>
         </main>
 
     </body>
