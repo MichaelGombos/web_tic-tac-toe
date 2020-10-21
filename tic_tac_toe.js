@@ -1,5 +1,7 @@
 
 const boardLogic = (() => {
+
+
     //keep track of winner mark!
     const checkDiagonalWin = (board) => {
         console.table(board);
@@ -55,16 +57,19 @@ const boardLogic = (() => {
         }
     }
 
-    return{checkWin, checkBoardFull};
+    return{ checkWin, checkBoardFull};
 })();
 
 const DOMboard = (() =>{
-
     const board = document.querySelector("#board");
     const boxes = board.getElementsByClassName("ticBox");
-    console.log(boxes[0].getAttribute('data-index'));
-    console.log(boxes[0].innerHTML);
-    
+
+    for(let i = 0; i < boxes.length;i++){
+        boxes[i].addEventListener('click', function(){
+            console.log(this.getAttribute("data-index"));
+            play(this.getAttribute("data-index"));
+        });
+    }
     
     //update innerHTML of board to match our running gameBoard
     const updateBoard = (board) =>{
@@ -76,7 +81,25 @@ const DOMboard = (() =>{
         }
     };
 
-    return{updateBoard};
+    const player1 = Player("mike","X");
+    const player2 = Player("bob","O");
+
+    let turns = 0;
+    const currentPlayer = (player1, player2) =>{
+        turns++;
+        if(turns %2 != 0){//odds 
+            return player1
+        }
+        else{
+            return player2
+        }
+    }
+
+    const play = (indexValue) =>{
+        let curPLayer = currentPlayer(player1,player2)
+        curPLayer.placeMark(indexValue);
+    }
+    return{play, updateBoard};
 })();
 
 const Gameboard = (() => {
@@ -108,7 +131,8 @@ const Gameboard = (() => {
     return{addMark, viewBoard};
 })();
 
-const Player = (name,mark) =>{ //'mark' X or O
+
+function Player(name,mark)  { //'mark' X or O
     const getName = () => name;
     const getMark = () => mark;
 
@@ -119,6 +143,3 @@ const Player = (name,mark) =>{ //'mark' X or O
 }
 
 
-const mike = Player("mike","X");
-const bob = Player("bob","O");
-bob.placeMark("0 1");
