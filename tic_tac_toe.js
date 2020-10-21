@@ -58,6 +58,27 @@ const boardLogic = (() => {
     return{checkWin, checkBoardFull};
 })();
 
+const DOMboard = (() =>{
+
+    const board = document.querySelector("#board");
+    const boxes = board.getElementsByClassName("ticBox");
+    console.log(boxes[0].getAttribute('data-index'));
+    console.log(boxes[0].innerHTML);
+    
+    
+    //update innerHTML of board to match our running gameBoard
+    const updateBoard = (board) =>{
+        const board1d = board[0].concat(board[1]).concat(board[2]);
+        console.log(board1d);
+        //update all innerHTML
+        for(let i = 0; i<9;i++){
+            boxes[i].innerHTML =  board1d[i];
+        }
+    };
+
+    return{updateBoard};
+})();
+
 const Gameboard = (() => {
     const gameboard = [["","",""],["","",""],["","",""]];
 
@@ -66,7 +87,6 @@ const Gameboard = (() => {
         let markIndex = spot.split(" ");
         if(gameboard[markIndex[0]][markIndex[1]] == ""){
             gameboard[markIndex[0]][markIndex[1]] = mark;
-
         }
         else{
 
@@ -78,13 +98,14 @@ const Gameboard = (() => {
             //TODO update score
         } 
 
+        DOMboard.updateBoard(gameboard);
     }
 
-    const display = () =>{
-        console.table(gameboard);
-    }
 
-    return{addMark, display};
+    const viewBoard = () =>{
+        return gameboard;
+    }
+    return{addMark, viewBoard};
 })();
 
 const Player = (name,mark) =>{ //'mark' X or O
@@ -101,6 +122,3 @@ const Player = (name,mark) =>{ //'mark' X or O
 const mike = Player("mike","X");
 const bob = Player("bob","O");
 bob.placeMark("0 1");
-bob.placeMark("1 1");
-bob.placeMark("1 0");
-bob.placeMark("1 2");
