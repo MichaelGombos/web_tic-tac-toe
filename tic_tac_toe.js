@@ -42,12 +42,10 @@ const boardLogic = (() => {
                 console.log("board not full")
                 return false;
             }
-            else{
-                console.log("boardFull");
-                console.log("draw!!!")
-                return true;
-            }
         }
+        console.log("boardFull");
+        console.log("draw!!!")
+        return true;
     }
     const checkWin = (board) =>{
         const gameBoard = board;
