@@ -53,7 +53,13 @@ const boardLogic = (() => {
         const gameBoard = board;
         if(checkDiagonalWin(gameBoard) || checkVerticalWin(gameBoard)
         || checkHorizantalWin(gameBoard)){
-            return true;
+            return 1; //win
+        }
+        else if(checkBoardFull(gameBoard)){
+            return 0; //draw 
+        }
+        else{
+            return -1; //in progress, no win or draw
         }
     }
 
@@ -63,8 +69,21 @@ const boardLogic = (() => {
 const DOMboard = (() =>{
     const board = document.querySelector("#board");
     const boxes = board.getElementsByClassName("ticBox");
+    const playButton = document.querySelector("#playButton");
+    
 
-    for(let i = 0; i < boxes.length;i++){
+    let score = document.querySelector("#score");
+    let scoreText = score.innerHTML;
+    let player1Score = scoreText.split("-")[0];
+    let player2Score = scoreText.split("-")[1];
+
+
+    playButton.addEventListener("click",function(){
+        Gameboard.turnGameOn();
+        //must clear board!;
+    })
+
+    for(let i = 0; i < boxes.length;i++){//board event listener
         boxes[i].addEventListener('click', function(){
             console.log(this.getAttribute("data-index"));
             play(this.getAttribute("data-index"));
@@ -95,40 +114,74 @@ const DOMboard = (() =>{
         }
     }
 
+    const updateWins = (mark) => {
+        if(mark == "X"){ //player1
+            player1Score = +player1Score + 1;
+        }
+        else{ //player2
+            player2Score = +player2Score + 1;
+        }
+        score.innerHTML=(`${player1Score}-${player2Score}`);
+
+    }
+
     const play = (indexValue) =>{
         let curPLayer = currentPlayer(player1,player2)
         curPLayer.placeMark(indexValue);
     }
-    return{play, updateBoard};
+    return{play, updateBoard, updateWins};
 })();
 
 const Gameboard = (() => {
-    const gameboard = [["","",""],["","",""],["","",""]];
+    let gameboard = [["","",""],["","",""],["","",""]];
+    let gameOn = true;
+
+    const turnGameOn = () => {
+        gameOn = true;
+        //must reset Board
+        gameboard = [["","",""],["","",""],["","",""]];
+        DOMboard.updateBoard(gameboard);
+
+    }
 
     const addMark = (mark,spot) => {
 
-        let markIndex = spot.split(" ");
-        if(gameboard[markIndex[0]][markIndex[1]] == ""){
-            gameboard[markIndex[0]][markIndex[1]] = mark;
-        }
-        else{
-
-            // alert("spot taken!");
-        }
-
-        if(boardLogic.checkWin(gameboard)){
-            console.log(`${mark} won game`);
-            //TODO update score
+        if(gameOn){
+            let markIndex = spot.split(" ");
+            if(gameboard[markIndex[0]][markIndex[1]] == ""){
+                gameboard[markIndex[0]][markIndex[1]] = mark;
+            }
+            else{
+                // alert("spot taken!");
+            }
+    
+            if(boardLogic.checkWin(gameboard) == 1){ //1 for win 0 for draw -1 for in progress
+                console.log(`${mark} won game`);
+                //TODO update score
+                DOMboard.updateWins(mark);
+                //TODO END GAME
+                gameOn = false;
+            } 
+    
+            if(boardLogic.checkWin(gameboard) == 0){ //1 for win 0 for draw -1 for in progress
+                console.log(`draw`);
+                //TODO END GAME
+                gameOn = false;
+            } 
+    
+            if(boardLogic.checkWin(gameboard) == 1){ //1 for win 0 for draw -1 for in progress
+                console.log(`in progress`);
+            } 
+            DOMboard.updateBoard(gameboard);
         } 
-
-        DOMboard.updateBoard(gameboard);
     }
+
 
 
     const viewBoard = () =>{
         return gameboard;
     }
-    return{addMark, viewBoard};
+    return{addMark, viewBoard, turnGameOn};
 })();
 
 
