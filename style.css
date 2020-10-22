@@ -1,11 +1,14 @@
 #start{
-    max-height: 300px;
+    max-height: 200px;
     max-width:400px;
-    height: 310px;
+    height: 200px;
     width:400px;
-    border: 5px solid black;
+
     margin-left:50%;
     transform: translate(-50%);
+
+    border: 10px solid black;
+    border-radius: 20px;
 }
 
 #start p{
@@ -19,6 +22,9 @@
     font-size:30px;
     margin-left:50%;
     transform: translate(-50%);
+
+    border: 10px solid black;
+    border-radius: 15px;
 }
 main{
 
@@ -42,7 +48,7 @@ main{
 #board{
     margin-left:50%;
     transform: translate(-50%);
-    margin-top:50px;
+
 
     max-width: 400px;
     max-height: 400px;
